@@ -23,7 +23,7 @@ use the `--browser` argument followed by the command needed to launch the web br
 - `w3m`
 - `curl`
 - [`jq`](https://github.com/stedolan/jq)
-- `xclip`
+- `xclip` (optional, only for `--copy`)
 
 ## Installation
 ### Install locally

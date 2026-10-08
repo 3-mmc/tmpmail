@@ -328,13 +328,16 @@ EOF
 }
 
 copy_email_to_clipboard() {
+    # Checked here rather than in main() so the clipboard tool is only
+    # required by --copy, and --clipboard-cmd has already been parsed
+    command -v "${copy_to_clipboard_cmd%% *}" >/dev/null 2>&1 ||
+        die "Could not find the following dependencies: ${copy_to_clipboard_cmd%% *}"
     $copy_to_clipboard_cmd <"$tmpmail_email_address"
 }
 
 main() {
     dep_missing=""
-    clipboard=${copy_to_clipboard_cmd%% *}
-    for dependency in jq $browser $clipboard curl; do
+    for dependency in jq $browser curl; do
         command -v "$dependency" >/dev/null 2>&1 || dep_missing="$dep_missing $dependency"
     done
     [ "${#dep_missing}" -gt 0 ] && die "Could not find the following dependencies:$dep_missing"
